@@ -45,4 +45,60 @@ public class Route {
 
     @Column
     private Long distance;
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public Location getFrom() {
+        return from;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setFrom(Location from) {
+        this.from = from;
+    }
+
+    public void setTo(Location to) {
+        this.to = to;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
 }
