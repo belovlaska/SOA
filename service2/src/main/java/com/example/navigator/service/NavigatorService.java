@@ -2,20 +2,24 @@ package com.example.navigator.service;
 
 import com.example.navigator.client.Service1RestClient;
 import com.example.navigator.dto.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class NavigatorService {
+/**
+ * Бизнес-логика навигатора.
+ * Stateless EJB, реализующий удалённый интерфейс NavigatorServiceRemote.
+ */
+@Stateless
+public class NavigatorService implements NavigatorServiceRemote {
 
-    @Autowired
+    @EJB
     private Service1RestClient service1RestClient;
 
+    @Override
     public List<RouteDto> getRoutes(Long idFrom, Long idTo, String orderBy) {
         try {
             List<RouteDto> allRoutes = service1RestClient.getRoutes();
@@ -24,12 +28,18 @@ public class NavigatorService {
                 return List.of();
             }
 
-
-            List<RouteDto> sorted = allRoutes.stream()
+            // Фильтрация по локациям в соответствии с описанием OpenAPI:
+            // "найти все маршруты между указанными локациями".
+            // Здесь считаем, что идентификатор локации кодируется в поле x объекта Location.
+            List<RouteDto> filtered = allRoutes.stream()
+                    .filter(r -> r.getFrom() != null && r.getFrom().getX() != null
+                              && r.getTo() != null && r.getTo().getX() != null)
+                    .filter(r -> r.getFrom().getX().longValue() == idFrom
+                              && r.getTo().getX().longValue() == idTo)
                     .sorted(getComparator(orderBy))
                     .collect(Collectors.toList());
 
-            return sorted;
+            return filtered;
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch routes from service 1: " + e.getMessage(), e);
         }
@@ -62,6 +72,7 @@ public class NavigatorService {
         return descending ? comparator.reversed() : comparator;
     }
 
+    @Override
     public RouteDto addRoute(Long idFrom, Long idTo, Long distance) {
         try {
             RouteCreateRequestDto dto = new RouteCreateRequestDto();

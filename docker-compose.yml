@@ -1,0 +1,161 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: routedb
+      POSTGRES_USER: route
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - soa-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U route -d routedb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  # Service Discovery
+  consul:
+    image: hashicorp/consul:1.15
+    container_name: consul
+    ports:
+      - "8500:8500"
+    command: "consul agent -dev -client=0.0.0.0"
+    networks:
+      - soa-network
+
+  # Сервис 1 - Spring Boot (2 экземпляра)
+  service1-1:
+    build:
+      context: ./service1
+      dockerfile: Dockerfile
+    container_name: service1-1
+    environment:
+      - SERVER_PORT=13223
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID=route-service-1:13223
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/routedb
+      - SPRING_DATASOURCE_USERNAME=route
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+    ports:
+      - "13223:13223"
+    networks:
+      - soa-network
+    depends_on:
+      - consul
+      - postgres
+
+  service1-2:
+    build:
+      context: ./service1
+      dockerfile: Dockerfile
+    container_name: service1-2
+    environment:
+      - SERVER_PORT=13225
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID=route-service-1:13225
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/routedb
+      - SPRING_DATASOURCE_USERNAME=route
+      - SPRING_DATASOURCE_PASSWORD=secret
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+    ports:
+      - "13225:13225"
+    networks:
+      - soa-network
+    depends_on:
+      - consul
+      - postgres
+
+  # Сервис 2 - WildFly (2 экземпляра)
+  wildfly1:
+    build:
+      context: ./service2
+      dockerfile: Dockerfile
+    container_name: wildfly1
+    environment:
+      - JAVA_OPTS=-Dservice1.url=http://haproxy:80/api
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - JBOSS_HTTP_PORT=13224
+    ports:
+      - "13224:13224"
+    networks:
+      - soa-network
+    depends_on:
+      consul:
+        condition: service_started
+
+  wildfly2:
+    build:
+      context: ./service2
+      dockerfile: Dockerfile
+    container_name: wildfly2
+    environment:
+      - JAVA_OPTS=-Dservice1.url=http://haproxy:80/api
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - JBOSS_HTTP_PORT=13226
+    ports:
+      - "13226:13226"
+    networks:
+      - soa-network
+    depends_on:
+      consul:
+        condition: service_started
+
+  # HAProxy (балансировка HTTP)
+  haproxy:
+    image: haproxy:2.8-alpine
+    container_name: haproxy
+#    volumes:
+#      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    build:
+      context: .
+      dockerfile: Dockerfile.haproxy
+    ports:
+      - "80:80"
+      - "8404:8404"  # Статистика
+    networks:
+      - soa-network
+    depends_on:
+      - service1-1
+      - service1-2
+      - wildfly1
+      - wildfly2
+
+#  # Клиентское приложение
+#  client:
+#    build:
+#      context: ./client
+#      dockerfile: Dockerfile
+#    container_name: client
+#    ports:
+#      - "3000:80"
+#    networks:
+#      - soa-network
+#    depends_on:
+#      haproxy:
+#        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+configs:
+  haproxy_cfg:
+    file: ./haproxy.cfg
+
+networks:
+  soa-network:
+    driver: bridge

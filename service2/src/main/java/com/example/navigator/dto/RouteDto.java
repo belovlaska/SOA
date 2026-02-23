@@ -1,8 +1,9 @@
 package com.example.navigator.dto;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class RouteDto {
+public class RouteDto implements Serializable{
     private Long id;
     private String name;
     private CoordinatesDto coordinates;

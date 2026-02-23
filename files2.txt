@@ -1,0 +1,1428 @@
+============= Directory tree =============
+service2/
+├── Dockerfile
+├── pom.xml
+├── src/
+├── ├── main/
+├── ├── ├── java/
+├── ├── ├── └── com/
+├── ├── ├── └── └── example/
+├── ├── ├── └── └── └── navigator/
+├── ├── ├── └── └── └── ├── RouteService2Application.java
+├── ├── ├── └── └── └── ├── client/
+├── ├── ├── └── └── └── ├── └── Service1RestClient.java
+├── ├── ├── └── └── └── ├── config/
+├── ├── ├── └── └── └── ├── ├── ConsulConfig.java
+├── ├── ├── └── └── └── ├── ├── CorsFilter.java
+├── ├── ├── └── └── └── ├── ├── JacksonConfig.java
+├── ├── ├── └── └── └── ├── └── JaxRsActivator.java
+├── ├── ├── └── └── └── ├── controller/
+├── ├── ├── └── └── └── ├── └── NavigatorController.java
+├── ├── ├── └── └── └── ├── dto/
+├── ├── ├── └── └── └── ├── ├── CoordinatesDto.java
+├── ├── ├── └── └── └── ├── ├── ErrorResponseDto.java
+├── ├── ├── └── └── └── ├── ├── LocationDto.java
+├── ├── ├── └── └── └── ├── ├── PageResponseDto.java
+├── ├── ├── └── └── └── ├── ├── RouteCreateRequestDto.java
+├── ├── ├── └── └── └── ├── └── RouteDto.java
+├── ├── ├── └── └── └── └── service/
+├── ├── ├── └── └── └── └── ├── NavigatorService.java
+├── ├── ├── └── └── └── └── └── NavigatorServiceRemote.java
+├── ├── ├── resources/
+├── ├── ├── ├── microprofile-config.properties
+├── ├── ├── ├── tomcat.keystore
+├── ├── ├── └── truststore.jks
+├── ├── └── webapp/
+├── ├── └── └── WEB-INF/
+├── ├── └── └── ├── beans.xml
+├── ├── └── └── └── jboss-deployment-structure.xml
+├── target/
+├── ├── classes/
+├── ├── ├── application.properties
+├── ├── ├── com/
+├── ├── ├── └── example/
+├── ├── ├── └── └── navigator/
+├── ├── ├── └── └── ├── RouteService2Application.class
+├── ├── ├── └── └── ├── client/
+├── ├── ├── └── └── ├── └── Service1RestClient.class
+├── ├── ├── └── └── ├── config/
+├── ├── ├── └── └── ├── ├── CorsFilter.class
+├── ├── ├── └── └── ├── ├── JacksonConfig.class
+├── ├── ├── └── └── ├── └── JaxRsActivator.class
+├── ├── ├── └── └── ├── controller/
+├── ├── ├── └── └── ├── └── NavigatorController.class
+├── ├── ├── └── └── ├── dto/
+├── ├── ├── └── └── ├── ├── CoordinatesDto.class
+├── ├── ├── └── └── ├── ├── ErrorResponseDto.class
+├── ├── ├── └── └── ├── ├── LocationDto.class
+├── ├── ├── └── └── ├── ├── PageResponseDto.class
+├── ├── ├── └── └── ├── ├── RouteCreateRequestDto.class
+├── ├── ├── └── └── ├── └── RouteDto.class
+├── ├── ├── └── └── └── service/
+├── ├── ├── └── └── └── ├── NavigatorService.class
+├── ├── ├── └── └── └── └── NavigatorServiceRemote.class
+├── ├── ├── microprofile-config.properties
+├── ├── ├── tomcat.keystore
+├── ├── └── truststore.jks
+├── ├── maven-archiver/
+├── ├── └── pom.properties
+├── ├── maven-status/
+├── ├── └── maven-compiler-plugin/
+├── ├── └── ├── compile/
+├── ├── └── ├── └── default-compile/
+├── ├── └── ├── └── ├── createdFiles.lst
+├── ├── └── ├── └── └── inputFiles.lst
+├── ├── └── └── testCompile/
+├── ├── └── └── └── default-testCompile/
+├── ├── └── └── └── ├── createdFiles.lst
+├── ├── └── └── └── └── inputFiles.lst
+├── ├── route-service-2/
+├── ├── └── WEB-INF/
+├── ├── └── ├── beans.xml
+├── ├── └── ├── classes/
+├── ├── └── ├── ├── application.properties
+├── ├── └── ├── ├── com/
+├── ├── └── ├── ├── └── example/
+├── ├── └── ├── ├── └── └── navigator/
+├── ├── └── ├── ├── └── └── ├── RouteService2Application.class
+├── ├── └── ├── ├── └── └── ├── client/
+├── ├── └── ├── ├── └── └── ├── └── Service1RestClient.class
+├── ├── └── ├── ├── └── └── ├── config/
+├── ├── └── ├── ├── └── └── ├── ├── CorsFilter.class
+├── ├── └── ├── ├── └── └── ├── ├── JacksonConfig.class
+├── ├── └── ├── ├── └── └── ├── └── JaxRsActivator.class
+├── ├── └── ├── ├── └── └── ├── controller/
+├── ├── └── ├── ├── └── └── ├── └── NavigatorController.class
+├── ├── └── ├── ├── └── └── ├── dto/
+├── ├── └── ├── ├── └── └── ├── ├── CoordinatesDto.class
+├── ├── └── ├── ├── └── └── ├── ├── ErrorResponseDto.class
+├── ├── └── ├── ├── └── └── ├── ├── LocationDto.class
+├── ├── └── ├── ├── └── └── ├── ├── PageResponseDto.class
+├── ├── └── ├── ├── └── └── ├── ├── RouteCreateRequestDto.class
+├── ├── └── ├── ├── └── └── ├── └── RouteDto.class
+├── ├── └── ├── ├── └── └── └── service/
+├── ├── └── ├── ├── └── └── └── ├── NavigatorService.class
+├── ├── └── ├── ├── └── └── └── └── NavigatorServiceRemote.class
+├── ├── └── ├── ├── microprofile-config.properties
+├── ├── └── ├── ├── tomcat.keystore
+├── ├── └── ├── └── truststore.jks
+├── ├── └── ├── jboss-deployment-structure.xml
+├── ├── └── └── lib/
+├── ├── └── └── ├── commons-codec-1.11.jar
+├── ├── └── └── ├── commons-logging-1.2.jar
+├── ├── └── └── ├── httpclient-4.5.14.jar
+├── ├── └── └── ├── httpcore-4.4.16.jar
+├── ├── └── └── ├── jackson-annotations-2.15.3.jar
+├── ├── └── └── ├── jackson-core-2.15.3.jar
+├── ├── └── └── ├── jackson-databind-2.15.3.jar
+├── ├── └── └── ├── jackson-datatype-jsr310-2.15.3.jar
+├── ├── └── └── ├── jackson-module-jakarta-xmlbind-annotations-2.15.3.jar
+├── ├── └── └── ├── jakarta.activation-2.0.1.jar
+├── ├── └── └── ├── jakarta.activation-api-2.1.0.jar
+├── ├── └── └── └── jakarta.xml.bind-api-3.0.1.jar
+├── ├── route-service-2.war
+
+
+
+============= Dockerfile =============
+# Сборка проекта
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Запуск на WildFly
+FROM quay.io/wildfly/wildfly:latest
+COPY --from=build /app/target/*.war /opt/jboss/wildfly/standalone/deployments/
+EXPOSE 8080
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+
+============= src/main/java/com/example/navigator/config/ConsulConfig.java =============
+package com.example.navigator.config;
+import com.ecwid.consul.v1.ConsulClient;
+import com.ecwid.consul.v1.agent.model.NewService;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.inject.Inject;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
+
+@Singleton
+@Startup
+public class ConsulConfig {
+
+    private ConsulClient consulClient;
+    private String serviceId;
+    private String serviceName = "wildfly-service";
+
+    @PostConstruct
+    public void registerWithConsul() {
+        try {
+            // Получаем конфигурацию из переменных окружения
+            String consulHost = System.getenv().getOrDefault("SPRING_CLOUD_CONSUL_HOST", "consul");
+            int consulPort = Integer.parseInt(System.getenv().getOrDefault("SPRING_CLOUD_CONSUL_PORT", "8500"));
+//            int servicePort = Integer.parseInt(System.getProperty("jboss.http.port", "13224"));
+            String portEnv = System.getenv("JBOSS_HTTP_PORT");
+            int servicePort = (portEnv != null) ? Integer.parseInt(portEnv) : 8080;
+
+            // Создаем клиента Consul
+            consulClient = new ConsulClient(consulHost, consulPort);
+
+            // Получаем hostname контейнера
+            String hostname = InetAddress.getLocalHost().getHostName();
+
+            // Формируем уникальный идентификатор сервиса
+            serviceId = serviceName + "-" + hostname + "-" + servicePort;
+
+            // Создаем конфигурацию сервиса
+            NewService newService = new NewService();
+            newService.setId(serviceId);
+            newService.setName(serviceName);
+            newService.setAddress(hostname);
+            newService.setPort(servicePort);
+
+            // Настраиваем теги
+            List<String> tags = new ArrayList<>();
+            tags.add("wildfly");
+            tags.add("ejb");
+            newService.setTags(tags);
+
+            // Настраиваем healthcheck
+            NewService.Check serviceCheck = new NewService.Check();
+            serviceCheck.setHttp("http://" + hostname + ":" + servicePort + "/api/navigator");
+            serviceCheck.setInterval("10s");
+            serviceCheck.setTimeout("5s");
+            serviceCheck.setDeregisterCriticalServiceAfter("90s");
+            newService.setCheck(serviceCheck);
+
+            // Регистрируем сервис
+            consulClient.agentServiceRegister(newService);
+
+            System.out.println("Service registered in Consul: " + serviceId);
+
+        } catch (Exception e) {
+            System.err.println("Failed to register service in Consul: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @PreDestroy
+    public void deregisterFromConsul() {
+        if (consulClient != null && serviceId != null) {
+            try {
+                consulClient.agentServiceDeregister(serviceId);
+                System.out.println("Service deregistered from Consul: " + serviceId);
+            } catch (Exception e) {
+                System.err.println("Failed to deregister service from Consul: " + e.getMessage());
+            }
+        }
+    }
+}
+
+============= src/main/java/com/example/navigator/config/JaxRsActivator.java =============
+package com.example.navigator.config;
+
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+
+/**
+ * Активация JAX-RS в контейнере.
+ * Все REST-ресурсы доступны по пути /api/*,
+ * при этом NavigatorController мапится на /navigator, как в OpenAPI.
+ */
+@ApplicationPath("/api")
+public class JaxRsActivator extends Application {
+}
+
+
+
+============= src/main/java/com/example/navigator/service/NavigatorServiceRemote.java =============
+package com.example.navigator.service;
+
+import com.example.navigator.dto.RouteDto;
+
+import jakarta.ejb.Remote;
+import java.util.List;
+
+/**
+ * Remote-интерфейс бизнес-логики навигатора.
+ * Предоставляет операции, описанные во втором веб-сервисе OpenAPI (/navigator/...).
+ */
+@Remote
+public interface NavigatorServiceRemote {
+
+    /**
+     * Найти маршруты между двумя локациями и отсортировать по orderBy.
+     *
+     * @param idFrom  идентификатор начальной локации
+     * @param idTo    идентификатор конечной локации
+     * @param orderBy поле сортировки (id, name, distance, creationDate, опционально с префиксом "-")
+     * @return список маршрутов, соответствующий OpenAPI-схеме Route
+     */
+    List<RouteDto> getRoutes(Long idFrom, Long idTo, String orderBy);
+
+    /**
+     * Добавить новый маршрут между указанными локациями.
+     *
+     * @param idFrom  идентификатор начальной локации
+     * @param idTo    идентификатор конечной локации
+     * @param distance расстояние (>= 2)
+     * @return созданный маршрут
+     */
+    RouteDto addRoute(Long idFrom, Long idTo, Long distance);
+}
+
+
+
+============= src/main/resources/microprofile-config.properties =============
+#  Service 1
+service1.url=http://haproxy:443/api
+service1.timeout=5000
+
+============= src/main/webapp/WEB-INF/beans.xml =============
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                           http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"
+       version="2.0"
+       bean-discovery-mode="all">
+</beans>
+
+============= pom.xml =============
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>route-service-2</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Версии зависимостей -->
+        <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
+        <jakarta.ws.rs.version>3.1.0</jakarta.ws.rs.version>
+        <jakarta.ejb.version>4.0.1</jakarta.ejb.version>
+        <jakarta.enterprise.version>4.0.1</jakarta.enterprise.version>
+        <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+        <jackson.version>2.15.3</jackson.version>
+        <lombok.version>1.18.30</lombok.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <resteasy.version>6.2.5.Final</resteasy.version>
+    </properties>
+
+    <dependencies>
+        <!-- Jakarta Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta.servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jakarta RESTful Web Services (JAX-RS) -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${jakarta.ws.rs.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jakarta Enterprise Beans (EJB) -->
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <version>${jakarta.ejb.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jakarta CDI (Contexts and Dependency Injection) -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${jakarta.enterprise.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jakarta Annotations -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${jakarta.annotation.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jackson для JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Apache HTTP Client -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <!-- RESTEasy Client (для использования в WildFly) -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ecwid.consul</groupId>
+            <artifactId>consul-api</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>ROOT</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+============= src/main/java/com/example/navigator/RouteService2Application.java =============
+package com.example.navigator;
+
+/**
+ * Класс-заглушка для совместимости исходной структуры проекта.
+ * Приложение деплоится как Jakarta EE WAR на WildFly и не использует Spring Boot.
+ * Точка входа не нужна: контейнер сам поднимает JAX-RS ресурсы и EJB.
+ */
+public class RouteService2Application {
+}
+
+
+============= src/main/java/com/example/navigator/client/Service1RestClient.java =============
+package com.example.navigator.client;
+
+import com.example.navigator.dto.RouteCreateRequestDto;
+import com.example.navigator.dto.RouteDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.ejb.Stateless;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
+
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+@Stateless
+public class Service1RestClient {
+
+    private static final Logger logger = Logger.getLogger(Service1RestClient.class.getName());
+
+    /**
+     * Базовый URL вызываемого сервиса.
+     * По умолчанию совпадает с OpenAPI server.url (https://.../api),
+     * но может быть переопределён через системное свойство service1.url.
+     */
+    private final String service1Url = System.getProperty("service1.url", "http://haproxy:80/api");
+
+    private final ObjectMapper objectMapper;
+
+    public Service1RestClient() {
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+    }
+
+    public List<RouteDto> getRoutes() {
+        String url = service1Url + "/routes?page=0&size=1000";
+        logger.info("Fetching routes from: " + url);
+
+        try (CloseableHttpClient client = createHttpClient()) {
+            HttpGet get = new HttpGet(url);
+            get.setHeader("Accept", "application/json");
+
+            try (CloseableHttpResponse response = client.execute(get)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode >= 200 && statusCode < 300) {
+                    Map<String, Object> body = objectMapper.readValue(responseBody, Map.class);
+                    if (body != null && body.containsKey("data")) {
+                        @SuppressWarnings("unchecked")
+                        List<Map<String, Object>> dataList = (List<Map<String, Object>>) body.get("data");
+                        if (dataList != null) {
+                            return dataList.stream()
+                                    .map(map -> objectMapper.convertValue(map, RouteDto.class))
+                                    .toList();
+                        }
+                    }
+                    return List.of();
+                } else {
+                    throw new RuntimeException("Failed to fetch routes, status: " + statusCode);
+                }
+            }
+        } catch (Exception e) {
+            logger.severe("Failed to fetch routes from service 1: " + e.getMessage());
+            throw new RuntimeException("Failed to fetch routes from service 1: " + e.getMessage(), e);
+        }
+    }
+
+    public RouteDto getRouteById(Long id) {
+        String url = service1Url + "/routes/" + id;
+        logger.info("Fetching route by id from: " + url);
+
+        try (CloseableHttpClient client = createHttpClient()) {
+            HttpGet get = new HttpGet(url);
+            get.setHeader("Accept", "application/json");
+
+            try (CloseableHttpResponse response = client.execute(get)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode >= 200 && statusCode < 300) {
+                    Map<String, Object> body = objectMapper.readValue(responseBody, Map.class);
+                    return objectMapper.convertValue(body, RouteDto.class);
+                } else {
+                    throw new RuntimeException("Failed to fetch route by id, status: " + statusCode);
+                }
+            }
+        } catch (Exception e) {
+            logger.severe("Failed to fetch route by id: " + e.getMessage());
+            throw new RuntimeException("Failed to fetch route by id: " + e.getMessage(), e);
+        }
+    }
+
+    public RouteDto createRoute(RouteCreateRequestDto dto) {
+        String url = service1Url + "/routes";
+        logger.info("Creating route at: " + url);
+
+        try (CloseableHttpClient client = createHttpClient()) {
+            HttpPost post = new HttpPost(url);
+            post.setHeader("Accept", "application/json");
+            post.setHeader("Content-Type", "application/json");
+
+            String json = objectMapper.writeValueAsString(dto);
+            post.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON.withCharset(StandardCharsets.UTF_8)));
+
+            try (CloseableHttpResponse response = client.execute(post)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                if (statusCode >= 200 && statusCode < 300) {
+                    Map<String, Object> body = objectMapper.readValue(responseBody, Map.class);
+                    return objectMapper.convertValue(body, RouteDto.class);
+                } else {
+                    throw new RuntimeException("Failed to create route, status: " + statusCode);
+                }
+            }
+        } catch (Exception e) {
+            logger.severe("Failed to create route: " + e.getMessage());
+            throw new RuntimeException("Failed to create route: " + e.getMessage(), e);
+        }
+    }
+
+    private Map<String, Object> readJsonAsMap(InputStream is) throws IOException {
+        if (is == null) {
+            return null;
+        }
+        return objectMapper.readValue(is, Map.class);
+    }
+
+    private CloseableHttpClient createHttpClient() throws Exception {
+        // Загружаем truststore из classpath
+        InputStream trustStoreStream = getClass().getResourceAsStream("/truststore.jks");
+
+        if (trustStoreStream != null) {
+            try (trustStoreStream) {
+                KeyStore trustStore = KeyStore.getInstance("JKS");
+                trustStore.load(trustStoreStream, "password".toCharArray());
+
+                SSLContext sslContext = SSLContexts.custom()
+                        .loadTrustMaterial(trustStore, new TrustSelfSignedStrategy())
+                        .build();
+
+                SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                        sslContext,
+                        new String[]{"TLSv1.2", "TLSv1.3"},
+                        null,
+                        SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+
+                return HttpClients.custom()
+                        .setSSLSocketFactory(sslsf)
+                        .build();
+            }
+        } else {
+            logger.warning("Truststore not found, creating HTTP client without SSL validation");
+            return HttpClients.createDefault();
+        }
+    }
+}
+
+============= src/main/java/com/example/navigator/config/CorsFilter.java =============
+package com.example.navigator.config;
+
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerResponseContext;
+import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.ext.Provider;
+import java.io.IOException;
+
+@Provider
+public class CorsFilter implements ContainerResponseFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext,
+                       ContainerResponseContext responseContext) throws IOException {
+        responseContext.getHeaders().add(
+                "Access-Control-Allow-Origin", "*");
+        responseContext.getHeaders().add(
+                "Access-Control-Allow-Credentials", "true");
+        responseContext.getHeaders().add(
+                "Access-Control-Allow-Headers",
+                "origin, content-type, accept, authorization");
+        responseContext.getHeaders().add(
+                "Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+    }
+}
+
+============= src/main/java/com/example/navigator/config/JacksonConfig.java =============
+package com.example.navigator.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.ws.rs.ext.ContextResolver;
+import jakarta.ws.rs.ext.Provider;
+
+@Provider
+public class JacksonConfig implements ContextResolver<ObjectMapper> {
+
+    private final ObjectMapper objectMapper;
+
+    public JacksonConfig() {
+        objectMapper = new ObjectMapper();
+
+        // Регистрируем модуль для поддержки Java 8 Date/Time API
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Настройки сериализации дат как ISO 8601 строк
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
+        // Для красивой печати JSON (опционально)
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
+
+    @Override
+    public ObjectMapper getContext(Class<?> type) {
+        return objectMapper;
+    }
+}
+
+============= src/main/java/com/example/navigator/controller/NavigatorController.java =============
+package com.example.navigator.controller;
+
+import com.example.navigator.dto.ErrorResponseDto;
+import com.example.navigator.dto.RouteDto;
+import com.example.navigator.service.NavigatorServiceRemote;
+import jakarta.ejb.EJB;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
+import java.net.URI;
+import java.util.List;
+
+/**
+ * JAX-RS ресурс второго сервиса (/navigator),
+ * строго соответствующий спецификации OpenAPI (SOA1.html).
+ */
+@Path("/navigator")
+@Produces(MediaType.APPLICATION_JSON)
+public class NavigatorController {
+
+    @EJB
+    private NavigatorServiceRemote navigatorService;
+
+    /**
+     * GET /navigator
+     * Информационный endpoint.
+     */
+    @GET
+    public Response info() {
+        return Response.ok("HELLO").build();
+    }
+
+    /**
+     * GET /navigator/routes/{id-from}/{id-to}/{order-by}
+     * Найти маршруты между двумя точками.
+     *
+     * @param fromId  ID точки отправления (id-from)
+     * @param toId    ID точки назначения (id-to)
+     * @param orderBy поле сортировки (order-by): id, name, distance, creationDate, с опциональным префиксом "-"
+     */
+    @GET
+    @Path("/routes/{id-from}/{id-to}/{order-by}")
+    public Response getRoutes(@PathParam("id-from") Long fromId,
+                              @PathParam("id-to") Long toId,
+                              @PathParam("order-by") String orderBy) {
+        try {
+            if (!orderBy.matches("^-?(id|name|distance|creationDate)$")) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ErrorResponseDto(400,
+                                "Bad Request: Invalid orderBy parameter. " +
+                                        "Valid values: id, name, distance, creationDate (use '-' prefix for DESC)"))
+                        .build();
+            }
+
+            List<RouteDto> routes = navigatorService.getRoutes(fromId, toId, orderBy);
+            return Response.ok(routes).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponseDto(400, "Bad Request: " + e.getMessage()))
+                    .build();
+        }
+    }
+
+    /**
+     * POST /navigator/route/add/{id-from}/{id-to}/{distance}
+     * Добавить маршрут между двумя точками.
+     *
+     * @param fromId   ID точки отправления (id-from)
+     * @param toId     ID точки назначения (id-to)
+     * @param distance дистанция (>= 2)
+     */
+    @POST
+    @Path("/route/add/{id-from}/{id-to}/{distance}")
+    public Response addRoute(@PathParam("id-from") Long fromId,
+                             @PathParam("id-to") Long toId,
+                             @PathParam("distance") Long distance,
+                             @Context UriInfo uriInfo) {
+        try {
+            if (distance < 2) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new ErrorResponseDto(400, "Bad Request: Distance must be >= 2"))
+                        .build();
+            }
+
+            RouteDto route = navigatorService.addRoute(fromId, toId, distance);
+            URI location = uriInfo.getAbsolutePathBuilder()
+                    .path(String.valueOf(route.getId()))
+                    .build();
+            return Response.created(location).entity(route).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity(new ErrorResponseDto(409, "Conflict: " + e.getMessage()))
+                    .build();
+        }
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/CoordinatesDto.java =============
+package com.example.navigator.dto;
+
+import java.io.Serializable;
+
+public class CoordinatesDto implements Serializable{
+    private Long x;
+    private Float y;
+
+    public CoordinatesDto(Long x, Float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public CoordinatesDto() {
+    }
+
+    public Long getX() {
+        return this.x;
+    }
+
+    public Float getY() {
+        return this.y;
+    }
+
+    public void setX(Long x) {
+        this.x = x;
+    }
+
+    public void setY(Float y) {
+        this.y = y;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof CoordinatesDto)) return false;
+        final CoordinatesDto other = (CoordinatesDto) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$x = this.getX();
+        final Object other$x = other.getX();
+        if (this$x == null ? other$x != null : !this$x.equals(other$x)) return false;
+        final Object this$y = this.getY();
+        final Object other$y = other.getY();
+        if (this$y == null ? other$y != null : !this$y.equals(other$y)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof CoordinatesDto;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $x = this.getX();
+        result = result * PRIME + ($x == null ? 43 : $x.hashCode());
+        final Object $y = this.getY();
+        result = result * PRIME + ($y == null ? 43 : $y.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "CoordinatesDto(x=" + this.getX() + ", y=" + this.getY() + ")";
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/ErrorResponseDto.java =============
+package com.example.navigator.dto;
+
+import java.io.Serializable;
+
+public class ErrorResponseDto implements Serializable{
+    private int code;
+    private String message;
+
+    public ErrorResponseDto(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public int getCode() {
+        return this.code;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof ErrorResponseDto)) return false;
+        final ErrorResponseDto other = (ErrorResponseDto) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (this.getCode() != other.getCode()) return false;
+        final Object this$message = this.getMessage();
+        final Object other$message = other.getMessage();
+        if (this$message == null ? other$message != null : !this$message.equals(other$message)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof ErrorResponseDto;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.getCode();
+        final Object $message = this.getMessage();
+        result = result * PRIME + ($message == null ? 43 : $message.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "ErrorResponseDto(code=" + this.getCode() + ", message=" + this.getMessage() + ")";
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/LocationDto.java =============
+package com.example.navigator.dto;
+
+import java.io.Serializable;
+
+public class LocationDto implements Serializable{
+    private Integer x;
+    private Long y;
+    private Long z;
+    private String name;
+
+    public LocationDto(Integer x, Long y, Long z, String name) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.name = name;
+    }
+
+    public LocationDto() {
+    }
+
+    public Integer getX() {
+        return this.x;
+    }
+
+    public Long getY() {
+        return this.y;
+    }
+
+    public Long getZ() {
+        return this.z;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setX(Integer x) {
+        this.x = x;
+    }
+
+    public void setY(Long y) {
+        this.y = y;
+    }
+
+    public void setZ(Long z) {
+        this.z = z;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof LocationDto)) return false;
+        final LocationDto other = (LocationDto) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$x = this.getX();
+        final Object other$x = other.getX();
+        if (this$x == null ? other$x != null : !this$x.equals(other$x)) return false;
+        final Object this$y = this.getY();
+        final Object other$y = other.getY();
+        if (this$y == null ? other$y != null : !this$y.equals(other$y)) return false;
+        final Object this$z = this.getZ();
+        final Object other$z = other.getZ();
+        if (this$z == null ? other$z != null : !this$z.equals(other$z)) return false;
+        final Object this$name = this.getName();
+        final Object other$name = other.getName();
+        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof LocationDto;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $x = this.getX();
+        result = result * PRIME + ($x == null ? 43 : $x.hashCode());
+        final Object $y = this.getY();
+        result = result * PRIME + ($y == null ? 43 : $y.hashCode());
+        final Object $z = this.getZ();
+        result = result * PRIME + ($z == null ? 43 : $z.hashCode());
+        final Object $name = this.getName();
+        result = result * PRIME + ($name == null ? 43 : $name.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "LocationDto(x=" + this.getX() + ", y=" + this.getY() + ", z=" + this.getZ() + ", name=" + this.getName() + ")";
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/PageResponseDto.java =============
+package com.example.navigator.dto;
+import java.io.Serializable;
+
+import java.util.List;
+
+public class PageResponseDto<T> implements Serializable{
+    private List<T> data;
+    private int totalPages;
+
+    public PageResponseDto() {
+    }
+
+    public PageResponseDto(List<T> data, int totalPages) {
+        this.data = data;
+        this.totalPages = totalPages;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/RouteCreateRequestDto.java =============
+package com.example.navigator.dto;
+import java.io.Serializable;
+
+public class RouteCreateRequestDto implements Serializable{
+    private String name;
+    private CoordinatesDto coordinates;
+    private LocationDto from;
+    private LocationDto to;
+    private Long distance;
+
+    public RouteCreateRequestDto(String name, CoordinatesDto coordinates, LocationDto from, LocationDto to, Long distance) {
+        this.name = name;
+        this.coordinates = coordinates;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
+    public RouteCreateRequestDto() {
+
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public CoordinatesDto getCoordinates() {
+        return this.coordinates;
+    }
+
+    public LocationDto getFrom() {
+        return this.from;
+    }
+
+    public LocationDto getTo() {
+        return this.to;
+    }
+
+    public Long getDistance() {
+        return this.distance;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(CoordinatesDto coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setFrom(LocationDto from) {
+        this.from = from;
+    }
+
+    public void setTo(LocationDto to) {
+        this.to = to;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof RouteCreateRequestDto)) return false;
+        final RouteCreateRequestDto other = (RouteCreateRequestDto) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$name = this.getName();
+        final Object other$name = other.getName();
+        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
+        final Object this$coordinates = this.getCoordinates();
+        final Object other$coordinates = other.getCoordinates();
+        if (this$coordinates == null ? other$coordinates != null : !this$coordinates.equals(other$coordinates))
+            return false;
+        final Object this$from = this.getFrom();
+        final Object other$from = other.getFrom();
+        if (this$from == null ? other$from != null : !this$from.equals(other$from)) return false;
+        final Object this$to = this.getTo();
+        final Object other$to = other.getTo();
+        if (this$to == null ? other$to != null : !this$to.equals(other$to)) return false;
+        final Object this$distance = this.getDistance();
+        final Object other$distance = other.getDistance();
+        if (this$distance == null ? other$distance != null : !this$distance.equals(other$distance)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof RouteCreateRequestDto;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $name = this.getName();
+        result = result * PRIME + ($name == null ? 43 : $name.hashCode());
+        final Object $coordinates = this.getCoordinates();
+        result = result * PRIME + ($coordinates == null ? 43 : $coordinates.hashCode());
+        final Object $from = this.getFrom();
+        result = result * PRIME + ($from == null ? 43 : $from.hashCode());
+        final Object $to = this.getTo();
+        result = result * PRIME + ($to == null ? 43 : $to.hashCode());
+        final Object $distance = this.getDistance();
+        result = result * PRIME + ($distance == null ? 43 : $distance.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "RouteCreateRequestDto(name=" + this.getName() + ", coordinates=" + this.getCoordinates() + ", from=" + this.getFrom() + ", to=" + this.getTo() + ", distance=" + this.getDistance() + ")";
+    }
+}
+
+
+============= src/main/java/com/example/navigator/dto/RouteDto.java =============
+package com.example.navigator.dto;
+
+import java.time.LocalDate;
+import java.io.Serializable;
+
+public class RouteDto implements Serializable{
+    private Long id;
+    private String name;
+    private CoordinatesDto coordinates;
+    private LocalDate creationDate;
+    private LocationDto from;
+    private LocationDto to;
+    private Long distance;
+
+    public RouteDto(Long id, String name, CoordinatesDto coordinates, LocalDate creationDate, LocationDto from, LocationDto to, Long distance) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
+
+    public RouteDto() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public CoordinatesDto getCoordinates() {
+        return this.coordinates;
+    }
+
+    public LocalDate getCreationDate() {
+        return this.creationDate;
+    }
+
+    public LocationDto getFrom() {
+        return this.from;
+    }
+
+    public LocationDto getTo() {
+        return this.to;
+    }
+
+    public Long getDistance() {
+        return this.distance;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(CoordinatesDto coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setFrom(LocationDto from) {
+        this.from = from;
+    }
+
+    public void setTo(LocationDto to) {
+        this.to = to;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof RouteDto)) return false;
+        final RouteDto other = (RouteDto) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$id = this.getId();
+        final Object other$id = other.getId();
+        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
+        final Object this$name = this.getName();
+        final Object other$name = other.getName();
+        if (this$name == null ? other$name != null : !this$name.equals(other$name)) return false;
+        final Object this$coordinates = this.getCoordinates();
+        final Object other$coordinates = other.getCoordinates();
+        if (this$coordinates == null ? other$coordinates != null : !this$coordinates.equals(other$coordinates))
+            return false;
+        final Object this$creationDate = this.getCreationDate();
+        final Object other$creationDate = other.getCreationDate();
+        if (this$creationDate == null ? other$creationDate != null : !this$creationDate.equals(other$creationDate))
+            return false;
+        final Object this$from = this.getFrom();
+        final Object other$from = other.getFrom();
+        if (this$from == null ? other$from != null : !this$from.equals(other$from)) return false;
+        final Object this$to = this.getTo();
+        final Object other$to = other.getTo();
+        if (this$to == null ? other$to != null : !this$to.equals(other$to)) return false;
+        final Object this$distance = this.getDistance();
+        final Object other$distance = other.getDistance();
+        if (this$distance == null ? other$distance != null : !this$distance.equals(other$distance)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof RouteDto;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $id = this.getId();
+        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
+        final Object $name = this.getName();
+        result = result * PRIME + ($name == null ? 43 : $name.hashCode());
+        final Object $coordinates = this.getCoordinates();
+        result = result * PRIME + ($coordinates == null ? 43 : $coordinates.hashCode());
+        final Object $creationDate = this.getCreationDate();
+        result = result * PRIME + ($creationDate == null ? 43 : $creationDate.hashCode());
+        final Object $from = this.getFrom();
+        result = result * PRIME + ($from == null ? 43 : $from.hashCode());
+        final Object $to = this.getTo();
+        result = result * PRIME + ($to == null ? 43 : $to.hashCode());
+        final Object $distance = this.getDistance();
+        result = result * PRIME + ($distance == null ? 43 : $distance.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "RouteDto(id=" + this.getId() + ", name=" + this.getName() + ", coordinates=" + this.getCoordinates() + ", creationDate=" + this.getCreationDate() + ", from=" + this.getFrom() + ", to=" + this.getTo() + ", distance=" + this.getDistance() + ")";
+    }
+}
+
+
+============= src/main/java/com/example/navigator/service/NavigatorService.java =============
+package com.example.navigator.service;
+
+import com.example.navigator.client.Service1RestClient;
+import com.example.navigator.dto.*;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Бизнес-логика навигатора.
+ * Stateless EJB, реализующий удалённый интерфейс NavigatorServiceRemote.
+ */
+@Stateless
+public class NavigatorService implements NavigatorServiceRemote {
+
+    @EJB
+    private Service1RestClient service1RestClient;
+
+    @Override
+    public List<RouteDto> getRoutes(Long idFrom, Long idTo, String orderBy) {
+        try {
+            List<RouteDto> allRoutes = service1RestClient.getRoutes();
+
+            if (allRoutes == null || allRoutes.isEmpty()) {
+                return List.of();
+            }
+
+            // Фильтрация по локациям в соответствии с описанием OpenAPI:
+            // "найти все маршруты между указанными локациями".
+            // Здесь считаем, что идентификатор локации кодируется в поле x объекта Location.
+            List<RouteDto> filtered = allRoutes.stream()
+                    .filter(r -> r.getFrom() != null && r.getFrom().getX() != null
+                              && r.getTo() != null && r.getTo().getX() != null)
+                    .filter(r -> r.getFrom().getX().longValue() == idFrom
+                              && r.getTo().getX().longValue() == idTo)
+                    .sorted(getComparator(orderBy))
+                    .collect(Collectors.toList());
+
+            return filtered;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch routes from service 1: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Компаратор для сортировки
+     * Поддерживает: id, name, distance, creationDate
+     * С префиксом "-" для DESC (убывание)
+     */
+    private Comparator<RouteDto> getComparator(String orderBy) {
+        String field = orderBy;
+        boolean descending = false;
+
+        if (orderBy != null && orderBy.startsWith("-")) {
+            field = orderBy.substring(1);
+            descending = true;
+        }
+
+        Comparator<RouteDto> comparator = switch (field) {
+            case "id" -> Comparator.comparing(RouteDto::getId);
+            case "name" -> Comparator.comparing(RouteDto::getName);
+            case "distance" -> Comparator.comparing(RouteDto::getDistance,
+                    Comparator.nullsLast(Comparator.naturalOrder()));
+            case "creationDate" -> Comparator.comparing(RouteDto::getCreationDate,
+                    Comparator.nullsLast(Comparator.naturalOrder()));
+            default -> Comparator.comparing(RouteDto::getId);
+        };
+
+        return descending ? comparator.reversed() : comparator;
+    }
+
+    @Override
+    public RouteDto addRoute(Long idFrom, Long idTo, Long distance) {
+        try {
+            RouteCreateRequestDto dto = new RouteCreateRequestDto();
+            dto.setName("Route from " + idFrom + " to " + idTo);
+            dto.setDistance(distance);
+
+            CoordinatesDto coords = new CoordinatesDto();
+            coords.setX(idFrom);
+            coords.setY((float) idTo);
+            dto.setCoordinates(coords);
+
+            LocationDto from = new LocationDto();
+            from.setX(idFrom.intValue());
+            from.setY(idFrom);
+            from.setZ(idFrom);
+            from.setName("Location " + idFrom);
+            dto.setFrom(from);
+
+            LocationDto to = new LocationDto();
+            to.setX(idTo.intValue());
+            to.setY(idTo);
+            to.setZ(idTo);
+            to.setName("Location " + idTo);
+            dto.setTo(to);
+
+            return service1RestClient.createRoute(dto);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add route: " + e.getMessage(), e);
+        }
+    }
+}
+
+
+============= src/main/resources/tomcat.keystore =============
+Skipped: Binary file
+
+============= src/main/resources/truststore.jks =============
+Skipped: Binary file
+
+============= src/main/webapp/WEB-INF/jboss-deployment-structure.xml =============
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <!-- Исключаем модули, которые могут конфликтовать -->
+        <exclusions>
+            <module name="org.slf4j" />
+            <module name="org.slf4j.impl" />
+        </exclusions>
+    </deployment>
+</jboss-deployment-structure>
+

@@ -1,6 +1,7 @@
 package com.example.navigator.dto;
+import java.io.Serializable;
 
-public class RouteCreateRequestDto {
+public class RouteCreateRequestDto implements Serializable{
     private String name;
     private CoordinatesDto coordinates;
     private LocationDto from;

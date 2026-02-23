@@ -1,19 +1,9 @@
 package com.example.navigator;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-
-@SpringBootApplication
-public class RouteService2Application extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(RouteService2Application.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(RouteService2Application.class, args);
-    }
+/**
+ * Класс-заглушка для совместимости исходной структуры проекта.
+ * Приложение деплоится как Jakarta EE WAR на WildFly и не использует Spring Boot.
+ * Точка входа не нужна: контейнер сам поднимает JAX-RS ресурсы и EJB.
+ */
+public class RouteService2Application {
 }

@@ -1,0 +1,818 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger UI</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@latest/swagger-ui.css" />
+  <link rel="icon" type="image/png" href="https://unpkg.com/swagger-ui-dist@latest/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="https://unpkg.com/swagger-ui-dist@latest/favicon-16x16.png" sizes="16x16" />
+  <style>
+    html {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0;
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist@latest/swagger-ui-bundle.js" crossorigin></script>
+  <script src="https://unpkg.com/swagger-ui-dist@latest/swagger-ui-standalone-preset.js" crossorigin></script>
+  <script>
+    window.onload = function() {
+      // Встроенная спецификация OpenAPI
+      const spec = {
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Route Collection API",
+    "version": "1.0.0",
+    "description": "RESTful API для управления коллекцией объектов Route.\nФормат данных: JSON. Поддерживаются CRUD, фильтрация, сортировка, пагинация\nи дополнительные операции. Доп. сервис: /navigator.\n"
+  },
+  "servers": [
+    {
+      "url": "https://helios/api"
+    }
+  ],
+  "paths": {
+    "/routes": {
+      "post": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Создать новый Route",
+        "description": "id и creationDate генерируются автоматически на сервере.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RouteCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "URL созданного ресурса",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Получить список Route",
+        "description": "Поддерживает фильтрацию по любым комбинациям полей, сортировку и пагинацию.\nВсе параметры — в query.\n",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Сортировка, например: sort=name:desc,distance",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Номер страницы (с 0)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Размер страницы",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 20
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Фильтр: точное совпадение id",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Фильтр: точное совпадение name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name_like",
+            "in": "query",
+            "description": "Фильтр: name содержит подстроку",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "distance",
+            "in": "query",
+            "description": "Фильтр: точное совпадение distance",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          },
+          {
+            "name": "distance_gt",
+            "in": "query",
+            "description": "distance > value",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          },
+		  {
+            "name": "distance_gte",
+            "in": "query",
+            "description": "distance >= value",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          },
+          {
+            "name": "distance_lt",
+            "in": "query",
+            "description": "distance < value",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          },
+		  {
+            "name": "distance_lte",
+            "in": "query",
+            "description": "distance <= value",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          },
+          {
+            "name": "creationDate_before",
+            "in": "query",
+            "description": "creationDate < указанного (ISO date)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "creationDate_after",
+            "in": "query",
+            "description": "creationDate > указанного (ISO date)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "fromName",
+            "in": "query",
+            "description": "Фильтр по имени начальной локации (точно)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromName_like",
+            "in": "query",
+            "description": "Фильтр по имени начальной локации (contains)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toName",
+            "in": "query",
+            "description": "Фильтр по имени конечной локации (точно)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toName_like",
+            "in": "query",
+            "description": "Фильтр по имени конечной локации (contains)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Route"
+                      }
+                    },
+                    "totalPages": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/routes/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Получить Route по ID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Route"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Обновить Route по ID",
+        "description": "Полная замена ресурса; server-генерируемые поля могут игнорироваться.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RouteUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Удалить Route по ID",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/routes/distance/{value}": {
+      "delete": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Удалить все объекты с distance, эквивалентным заданному",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deletedCount": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/routes/distance/lt/{value}": {
+      "get": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Вернуть количество объектов с distance меньше заданного",
+        "parameters": [
+          {
+            "name": "value",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/routes/distance/distinct": {
+      "get": {
+        "tags": [
+          "First service"
+        ],
+        "summary": "Вернуть массив уникальных значений distance",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int64",
+                    "minimum": 2
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/navigator/routes/{id-from}/{id-to}/{order-by}": {
+      "get": {
+        "tags": [
+          "Second service"
+        ],
+        "summary": "Найти все маршруты между указанными локациями, отсортировать по параметру",
+        "description": "Ищет маршруты, у которых from и to совпадают с указанными локациями (id-from, id-to).\nРезультаты сортируются по полю, указанному в order-by.\nПримеры значений order-by: \"id\", \"name\", \"distance\", \"creationDate\".\n",
+        "parameters": [
+          {
+            "name": "id-from",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "id-to",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "order-by",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Route"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/navigator/route/add/{id-from}/{id-to}/{distance}": {
+      "post": {
+        "tags": [
+          "Second service"
+        ],
+        "summary": "Добавить новый маршрут между указанными локациями",
+        "description": "Создаёт новый маршрут с указанными начальной и конечной локациями и расстоянием.\nПоле name и координаты (coordinates) будут сгенерированы автоматически.\n",
+        "parameters": [
+          {
+            "name": "id-from",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "id-to",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "distance",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 2
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Route"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL созданного ресурса",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Entity not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict (duplicate/constraint violation)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Coordinates": {
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "y": {
+            "type": "number",
+            "format": "float",
+            "exclusiveMinimum": -985
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "required": [
+          "x",
+          "y",
+          "z",
+          "name"
+        ],
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "z": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 434
+          }
+        }
+      },
+      "Route": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "coordinates",
+          "creationDate",
+          "from",
+          "to"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "from": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "to": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "distance": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 2,
+            "nullable": true
+          }
+        }
+      },
+      "RouteCreate": {
+        "type": "object",
+        "required": [
+          "name",
+          "coordinates",
+          "from",
+          "to"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "from": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "to": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "distance": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 2,
+            "nullable": true
+          }
+        }
+      },
+      "RouteUpdate": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RouteCreate"
+          }
+        ]
+      }
+    }
+  }
+};
+      // Инициализация Swagger UI
+      const ui = SwaggerUIBundle({
+        spec: spec,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      });
+      window.ui = ui;
+    };
+  </script>
+</body>
+</html>

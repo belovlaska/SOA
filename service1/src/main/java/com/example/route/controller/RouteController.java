@@ -24,10 +24,11 @@ public class RouteController {
     private RouteService routeService;
 
     /**
-     * GET /routes/distancedistinct
+     * GET /routes/distance/distinct
      * Получить все уникальные значения дистанций
+     * в точном соответствии с OpenAPI (/routes/distance/distinct).
      */
-    @GetMapping("/distancedistinct")
+    @GetMapping("/distance/distinct")
     public ResponseEntity<?> getDistinctDistances() {
         try {
             List<Long> distances = routeService.getDistinctDistances();
@@ -39,10 +40,11 @@ public class RouteController {
     }
 
     /**
-     * GET /routes/distancelt/{value}
+     * GET /routes/distance/lt/{value}
      * Получить кол-во маршрутов с distance < value
+     * в точном соответствии с OpenAPI (/routes/distance/lt/{value}).
      */
-    @GetMapping("/distancelt/{value}")
+    @GetMapping("/distance/lt/{value}")
     public ResponseEntity<?> countByDistanceLessThan(@PathVariable Long value) {
         try {
             if (value < 2) {
@@ -76,7 +78,6 @@ public class RouteController {
         }
     }
 
-    // ============ ОСНОВНЫЕ ENDPOINTS ============
 
     /**
      * POST /routes
@@ -181,5 +182,9 @@ public class RouteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponseDto(500, "Server Error: " + e.getMessage()));
         }
+    }
+    @GetMapping("/health")
+    public ResponseEntity<?> info() {
+        return ResponseEntity.ok("HELLO");
     }
 }

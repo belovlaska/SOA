@@ -1,6 +1,8 @@
 package com.example.navigator.dto;
 
-public class LocationDto {
+import java.io.Serializable;
+
+public class LocationDto implements Serializable{
     private Integer x;
     private Long y;
     private Long z;

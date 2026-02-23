@@ -1,6 +1,8 @@
 package com.example.navigator.dto;
 
-public class ErrorResponseDto {
+import java.io.Serializable;
+
+public class ErrorResponseDto implements Serializable{
     private int code;
     private String message;
 

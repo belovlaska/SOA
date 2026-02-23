@@ -1,8 +1,9 @@
 package com.example.navigator.dto;
+import java.io.Serializable;
 
 import java.util.List;
 
-public class PageResponseDto<T> {
+public class PageResponseDto<T> implements Serializable{
     private List<T> data;
     private int totalPages;
 

@@ -1,0 +1,985 @@
+============= Directory tree =============
+service1/
+├── Dockerfile
+├── pom.xml
+├── src/
+├── ├── main/
+├── ├── ├── java/
+├── ├── ├── └── com/
+├── ├── ├── └── └── example/
+├── ├── ├── └── └── └── route/
+├── ├── ├── └── └── └── ├── RouteService1Application.java
+├── ├── ├── └── └── └── ├── config/
+├── ├── ├── └── └── └── ├── ├── CorsConfig.java
+├── ├── ├── └── └── └── ├── └── WebConfig.java
+├── ├── ├── └── └── └── ├── controller/
+├── ├── ├── └── └── └── ├── └── RouteController.java
+├── ├── ├── └── └── └── ├── dto/
+├── ├── ├── └── └── └── ├── ├── CountResponseDto.java
+├── ├── ├── └── └── └── ├── ├── DeletedCountResponseDto.java
+├── ├── ├── └── └── └── ├── ├── ErrorResponseDto.java
+├── ├── ├── └── └── └── ├── ├── PageResponseDto.java
+├── ├── ├── └── └── └── ├── ├── RouteCreateDto.java
+├── ├── ├── └── └── └── ├── └── RouteUpdateDto.java
+├── ├── ├── └── └── └── ├── model/
+├── ├── ├── └── └── └── ├── ├── Coordinates.java
+├── ├── ├── └── └── └── ├── ├── Location.java
+├── ├── ├── └── └── └── ├── └── Route.java
+├── ├── ├── └── └── └── ├── repository/
+├── ├── ├── └── └── └── ├── └── RouteRepository.java
+├── ├── ├── └── └── └── └── service/
+├── ├── ├── └── └── └── └── └── RouteService.java
+├── ├── └── resources/
+├── ├── └── ├── application.properties
+├── ├── └── └── wildfly.keystore
+└── target/
+└── ├── classes/
+└── ├── ├── application.properties
+└── ├── ├── com/
+└── ├── ├── └── example/
+└── ├── ├── └── └── route/
+└── ├── ├── └── └── ├── RouteService1Application.class
+└── ├── ├── └── └── ├── config/
+└── ├── ├── └── └── ├── ├── CorsConfig$1.class
+└── ├── ├── └── └── ├── ├── CorsConfig.class
+└── ├── ├── └── └── ├── └── WebConfig.class
+└── ├── ├── └── └── ├── controller/
+└── ├── ├── └── └── ├── └── RouteController.class
+└── ├── ├── └── └── ├── dto/
+└── ├── ├── └── └── ├── ├── CountResponseDto.class
+└── ├── ├── └── └── ├── ├── DeletedCountResponseDto.class
+└── ├── ├── └── └── ├── ├── ErrorResponseDto.class
+└── ├── ├── └── └── ├── ├── PageResponseDto.class
+└── ├── ├── └── └── ├── ├── RouteCreateDto.class
+└── ├── ├── └── └── ├── └── RouteUpdateDto.class
+└── ├── ├── └── └── ├── model/
+└── ├── ├── └── └── ├── ├── Coordinates.class
+└── ├── ├── └── └── ├── ├── Location.class
+└── ├── ├── └── └── ├── └── Route.class
+└── ├── ├── └── └── ├── repository/
+└── ├── ├── └── └── ├── └── RouteRepository.class
+└── ├── ├── └── └── └── service/
+└── ├── ├── └── └── └── └── RouteService.class
+└── ├── └── wildfly.keystore
+└── ├── maven-archiver/
+└── ├── └── pom.properties
+└── ├── maven-status/
+└── ├── └── maven-compiler-plugin/
+└── ├── └── ├── compile/
+└── ├── └── ├── └── default-compile/
+└── ├── └── ├── └── ├── createdFiles.lst
+└── ├── └── ├── └── └── inputFiles.lst
+└── ├── └── └── testCompile/
+└── ├── └── └── └── default-testCompile/
+└── ├── └── └── └── ├── createdFiles.lst
+└── ├── └── └── └── └── inputFiles.lst
+└── ├── route-service-1-0.0.1-SNAPSHOT.jar
+└── ├── route-service-1-0.0.1-SNAPSHOT.jar.original
+
+
+
+============= Dockerfile =============
+# Сборка Spring Boot приложения
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Запуск
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+============= pom.xml =============
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.14</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.example</groupId>
+    <artifactId>route-service-1</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>route-service-1</name>
+    <description>Route Service 1 with Consul Discovery</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
+    </properties>
+
+    <dependencies>
+        <!-- Spring Boot стартеры -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Cloud Consul Discovery -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Consul Config -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-config</artifactId>
+        </dependency>
+
+        <!-- Lombok для сокращения кода -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+
+============= src/main/java/com/example/route/RouteService1Application.java =============
+package com.example.route;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class RouteService1Application extends SpringBootServletInitializer {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RouteService1Application.class, args);
+    }
+}
+
+
+============= src/main/java/com/example/route/config/CorsConfig.java =============
+package com.example.route.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class CorsConfig {
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOriginPatterns("*")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(false);
+            }
+        };
+    }
+}
+
+
+============= src/main/java/com/example/route/config/WebConfig.java =============
+package com.example.route.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    // Configuration for MVC settings
+}
+
+
+============= src/main/java/com/example/route/controller/RouteController.java =============
+package com.example.route.controller;
+
+import com.example.route.dto.*;
+import com.example.route.model.Route;
+import com.example.route.service.RouteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/routes")
+@CrossOrigin(origins = "*", maxAge = 3600)
+public class RouteController {
+
+    @Autowired
+    private RouteService routeService;
+
+    /**
+     * GET /routes/distance/distinct
+     * Получить все уникальные значения дистанций
+     * в точном соответствии с OpenAPI (/routes/distance/distinct).
+     */
+    @GetMapping("/distance/distinct")
+    public ResponseEntity<?> getDistinctDistances() {
+        try {
+            List<Long> distances = routeService.getDistinctDistances();
+            return ResponseEntity.ok(distances);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponseDto(500, "Server Error: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * GET /routes/distance/lt/{value}
+     * Получить кол-во маршрутов с distance < value
+     * в точном соответствии с OpenAPI (/routes/distance/lt/{value}).
+     */
+    @GetMapping("/distance/lt/{value}")
+    public ResponseEntity<?> countByDistanceLessThan(@PathVariable Long value) {
+        try {
+            if (value < 2) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ErrorResponseDto(400, "Distance must be >= 2"));
+            }
+            long count = routeService.countByDistanceLessThan(value);
+            return ResponseEntity.ok(new CountResponseDto(count));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponseDto(400, "Bad Request: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * DELETE /routes/distance/{value}
+     * Удалить все маршруты с дистанцией == value
+     */
+    @DeleteMapping("/distance/{value}")
+    public ResponseEntity<?> deleteByDistance(@PathVariable Long value) {
+        try {
+            if (value < 2) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ErrorResponseDto(400, "Distance must be >= 2"));
+            }
+            long deletedCount = routeService.deleteByDistance(value);
+            return ResponseEntity.ok(new DeletedCountResponseDto(deletedCount));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponseDto(400, "Bad Request: " + e.getMessage()));
+        }
+    }
+
+
+    /**
+     * POST /routes
+     * Создать новый маршрут
+     */
+    @PostMapping
+    public ResponseEntity<?> createRoute(@Valid @RequestBody RouteCreateDto dto, HttpServletRequest request) {
+        try {
+            Route route = routeService.createRoute(dto);
+            String location = request.getRequestURL().toString() + "/" + route.getId();
+            return ResponseEntity.created(URI.create(location)).body(route);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ErrorResponseDto(409, "Conflict: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * GET /routes
+     * Получить все маршруты с фильтрацией, сортировкой и пагинацией
+     *
+     * Параметры:
+     * - page: номер страницы (default: 0)
+     * - size: размер страницы (default: 20)
+     * - sort: поле сортировки (id, name, distance, creationDate, + "-" для DESC)
+     * - id: точный ID маршрута
+     * - name: точное имя маршрута
+     * - namelike: имя содержит (LIKE)
+     * - distance: точная дистанция (>= 2)
+     * - distancegt: дистанция > значение (> means greater than)
+     * - distancegte: дистанция >= значение (>= means greater than or equal)
+     * - distancelt: дистанция < значение (< means less than)
+     * - distancelte: дистанция <= значение (<= means less than or equal)
+     * - creationDateBefore: дата создания ДО (ISO date format: YYYY-MM-DD)
+     * - creationDateAfter: дата создания ПОСЛЕ (ISO date format: YYYY-MM-DD)
+     * - fromName: точное имя точки FROM
+     * - fromNamelike: имя FROM содержит (LIKE)
+     * - toName: точное имя точки TO
+     * - toNamelike: имя TO содержит (LIKE)
+     */
+    @GetMapping
+    public ResponseEntity<?> getAllRoutes(@RequestParam Map<String, String> params) {
+        try {
+            PageResponseDto<Route> response = routeService.getAllRoutes(params);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponseDto(400, "Bad Request: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * GET /routes/{id}
+     * Получить маршрут по ID
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getRouteById(@PathVariable Long id) {
+        try {
+            Optional<Route> route = routeService.getRouteById(id);
+            return route.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponseDto(404, "Not Found: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * PUT /routes/{id}
+     * Обновить маршрут по ID
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRoute(@PathVariable Long id, @Valid @RequestBody RouteUpdateDto dto) {
+        try {
+            Route route = routeService.updateRoute(id, dto);
+            return ResponseEntity.ok(route);
+        } catch (RuntimeException e) {
+            if (e.getMessage() != null && e.getMessage().contains("not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ErrorResponseDto(404, "Not Found: " + e.getMessage()));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponseDto(400, "Bad Request: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * DELETE /routes/{id}
+     * Удалить маршрут по ID
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRoute(@PathVariable Long id) {
+        try {
+            Optional<Route> route = routeService.getRouteById(id);
+            if (route.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ErrorResponseDto(404, "Not Found"));
+            }
+            routeService.deleteRoute(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponseDto(500, "Server Error: " + e.getMessage()));
+        }
+    }
+    @GetMapping("/health")
+    public ResponseEntity<?> info() {
+        return ResponseEntity.ok("HELLO");
+    }
+}
+
+
+============= src/main/java/com/example/route/dto/CountResponseDto.java =============
+package com.example.route.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class CountResponseDto {
+    private Long count;
+}
+
+
+============= src/main/java/com/example/route/dto/DeletedCountResponseDto.java =============
+package com.example.route.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class DeletedCountResponseDto {
+    private Long deletedCount;
+
+}
+
+
+============= src/main/java/com/example/route/dto/ErrorResponseDto.java =============
+package com.example.route.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ErrorResponseDto {
+    private int code;
+    private String message;
+
+}
+
+
+============= src/main/java/com/example/route/dto/PageResponseDto.java =============
+package com.example.route.dto;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+
+@Data
+@AllArgsConstructor
+public class PageResponseDto<T> {
+    private List<T> data;
+    private int totalPages;
+}
+
+
+============= src/main/java/com/example/route/dto/RouteCreateDto.java =============
+package com.example.route.dto;
+
+import com.example.route.model.Coordinates;
+import com.example.route.model.Location;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RouteCreateDto {
+    @NotEmpty(message = "name cannot be empty")
+    @Size(min = 1, max = 434, message = "name must be between 1 and 434 characters")
+    private String name;
+
+    @Valid
+    @NotNull(message = "coordinates cannot be null")
+    private Coordinates coordinates;
+
+    @Valid
+    @NotNull(message = "from cannot be null")
+    private Location from;
+
+    @Valid
+    @NotNull(message = "to cannot be null")
+    private Location to;
+
+    @Min(value = 2, message = "distance must be >= 2")
+    private Long distance;
+}
+
+
+============= src/main/java/com/example/route/dto/RouteUpdateDto.java =============
+package com.example.route.dto;
+
+import com.example.route.model.Coordinates;
+import com.example.route.model.Location;
+import lombok.Data;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
+@Data
+public class RouteUpdateDto {
+    @NotEmpty(message = "name cannot be empty")
+    @Size(min = 1, max = 434, message = "name must be between 1 and 434 characters")
+    private String name;
+
+    @Valid
+    @NotNull(message = "coordinates cannot be null")
+    private Coordinates coordinates;
+
+    @Valid
+    @NotNull(message = "from cannot be null")
+    private Location from;
+
+    @Valid
+    @NotNull(message = "to cannot be null")
+    private Location to;
+
+    @Min(value = 2, message = "distance must be >= 2")
+    private Long distance;
+}
+
+
+============= src/main/java/com/example/route/model/Coordinates.java =============
+package com.example.route.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
+public class Coordinates {
+    @NotNull
+    private Long x;
+
+    @NotNull
+    @Min(value = -985, message = "y must be > -985")
+    private Float y;
+}
+
+
+============= src/main/java/com/example/route/model/Location.java =============
+package com.example.route.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
+public class Location {
+    @NotNull
+    private Integer x;
+
+    @NotNull
+    private Long y;
+
+    @NotNull
+    private Long z;
+
+    @NotEmpty(message = "name cannot be empty")
+    private String name;
+}
+
+
+============= src/main/java/com/example/route/model/Route.java =============
+package com.example.route.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "routes")
+public class Route {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 434)
+    private String name;
+
+    @Embedded
+    private Coordinates coordinates;
+
+    @Column(nullable = false)
+    private LocalDate creationDate;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "x", column = @Column(name = "from_x")),
+            @AttributeOverride(name = "y", column = @Column(name = "from_y")),
+            @AttributeOverride(name = "z", column = @Column(name = "from_z")),
+            @AttributeOverride(name = "name", column = @Column(name = "from_name"))
+    })
+    private Location from;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "x", column = @Column(name = "to_x")),
+            @AttributeOverride(name = "y", column = @Column(name = "to_y")),
+            @AttributeOverride(name = "z", column = @Column(name = "to_z")),
+            @AttributeOverride(name = "name", column = @Column(name = "to_name"))
+    })
+    private Location to;
+
+    @Column
+    private Long distance;
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public Location getFrom() {
+        return from;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public Long getDistance() {
+        return distance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setFrom(Location from) {
+        this.from = from;
+    }
+
+    public void setTo(Location to) {
+        this.to = to;
+    }
+
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+}
+
+
+============= src/main/java/com/example/route/repository/RouteRepository.java =============
+package com.example.route.repository;
+
+import com.example.route.model.Route;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Repository
+public interface RouteRepository extends JpaRepository<Route, Long> {
+    List<Route> findByNameContainingIgnoreCase(String name);
+    List<Route> findByDistance(Long distance);
+    List<Route> findByDistanceGreaterThan(Long distance);
+    List<Route> findByDistanceGreaterThanEqual(Long distance);
+    List<Route> findByDistanceLessThan(Long distance);
+    List<Route> findByDistanceLessThanEqual(Long distance);
+    List<Route> findByCreationDateBefore(LocalDate date);
+    List<Route> findByCreationDateAfter(LocalDate date);
+
+    @Query("SELECT DISTINCT r.distance FROM Route r WHERE r.distance IS NOT NULL ORDER BY r.distance ASC")
+    List<Long> findDistinctDistances();
+
+    @Query("SELECT COUNT(r) FROM Route r WHERE r.distance < :value")
+    long countByDistanceLessThan(@Param("value") Long value);
+
+    @Query("DELETE FROM Route r WHERE r.distance = :value")
+    long deleteByDistance(@Param("value") Long value);
+}
+
+
+============= src/main/java/com/example/route/service/RouteService.java =============
+package com.example.route.service;
+
+import com.example.route.dto.PageResponseDto;
+import com.example.route.dto.RouteCreateDto;
+import com.example.route.dto.RouteUpdateDto;
+import com.example.route.model.Route;
+import com.example.route.repository.RouteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+public class RouteService {
+
+    @Autowired
+    private RouteRepository routeRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    public Route createRoute(RouteCreateDto dto) {
+        Route route = new Route();
+        route.setName(dto.getName());
+        route.setCoordinates(dto.getCoordinates());
+        route.setCreationDate(LocalDate.now());
+        route.setFrom(dto.getFrom());
+        route.setTo(dto.getTo());
+        route.setDistance(dto.getDistance());
+        return routeRepository.save(route);
+    }
+
+    public PageResponseDto<Route> getAllRoutes(Map<String, String> params) {
+        int page = Integer.parseInt(params.getOrDefault("page", "0"));
+        int size = Integer.parseInt(params.getOrDefault("size", "20"));
+        String sort = params.getOrDefault("sort", "id");
+
+        List<Route> routes = routeRepository.findAll();
+        routes = filterRoutes(routes, params);
+        routes = sortRoutes(routes, sort);
+
+        int totalPages = (int) Math.ceil((double) routes.size() / size);
+        int start = page * size;
+        int end = Math.min(start + size, routes.size());
+        List<Route> paged = routes.subList(start, end);
+
+        return new PageResponseDto<>(paged, totalPages);
+    }
+
+    public Optional<Route> getRouteById(Long id) {
+        return routeRepository.findById(id);
+    }
+
+    public Route updateRoute(Long id, RouteUpdateDto dto) {
+        Route route = routeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Route not found"));
+        route.setName(dto.getName());
+        route.setCoordinates(dto.getCoordinates());
+        route.setFrom(dto.getFrom());
+        route.setTo(dto.getTo());
+        route.setDistance(dto.getDistance());
+        return routeRepository.save(route);
+    }
+
+    public void deleteRoute(Long id) {
+        routeRepository.deleteById(id);
+    }
+
+    public long deleteByDistance(Long value) {
+        List<Route> toDelete = routeRepository.findByDistance(value);
+        routeRepository.deleteAll(toDelete);
+        return toDelete.size();
+    }
+
+    public long countByDistanceLessThan(Long value) {
+        return routeRepository.findByDistance(value).stream()
+                .filter(r -> r.getDistance() != null && r.getDistance() < value)
+                .count();
+    }
+
+    public List<Long> getDistinctDistances() {
+        return routeRepository.findDistinctDistances();
+    }
+
+    private List<Route> filterRoutes(List<Route> routes, Map<String, String> params) {
+        if (params.containsKey("id")) {
+            Long id = Long.parseLong(params.get("id"));
+            routes = routes.stream().filter(r -> r.getId().equals(id)).collect(Collectors.toList());
+        }
+        if (params.containsKey("name")) {
+            String name = params.get("name");
+            routes = routes.stream().filter(r -> r.getName().equals(name)).collect(Collectors.toList());
+        }
+        if (params.containsKey("namelike")) {
+            String namelike = params.get("namelike");
+            routes = routes.stream().filter(r -> r.getName().toLowerCase().contains(namelike.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("distance")) {
+            Long distance = Long.parseLong(params.get("distance"));
+            routes = routes.stream().filter(r -> r.getDistance() != null && r.getDistance().equals(distance))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("distancegt")) {
+            Long distance = Long.parseLong(params.get("distancegt"));
+            routes = routes.stream().filter(r -> r.getDistance() != null && r.getDistance() > distance)
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("distancegte")) {
+            Long distance = Long.parseLong(params.get("distancegte"));
+            routes = routes.stream().filter(r -> r.getDistance() != null && r.getDistance() >= distance)
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("distancelt")) {
+            Long distance = Long.parseLong(params.get("distancelt"));
+            routes = routes.stream().filter(r -> r.getDistance() != null && r.getDistance() < distance)
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("distancelte")) {
+            Long distance = Long.parseLong(params.get("distancelte"));
+            routes = routes.stream().filter(r -> r.getDistance() != null && r.getDistance() <= distance)
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("creationDatebefore")) {
+            LocalDate date = LocalDate.parse(params.get("creationDatebefore"));
+            routes = routes.stream().filter(r -> r.getCreationDate().isBefore(date))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("creationDateafter")) {
+            LocalDate date = LocalDate.parse(params.get("creationDateafter"));
+            routes = routes.stream().filter(r -> r.getCreationDate().isAfter(date))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("fromName")) {
+            String fromName = params.get("fromName");
+            routes = routes.stream().filter(r -> r.getFrom() != null && r.getFrom().getName().equals(fromName))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("fromNamelike")) {
+            String fromNamelike = params.get("fromNamelike");
+            routes = routes.stream()
+                    .filter(r -> r.getFrom() != null && r.getFrom().getName().toLowerCase().contains(fromNamelike.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("toName")) {
+            String toName = params.get("toName");
+            routes = routes.stream().filter(r -> r.getTo() != null && r.getTo().getName().equals(toName))
+                    .collect(Collectors.toList());
+        }
+        if (params.containsKey("toNamelike")) {
+            String toNamelike = params.get("toNamelike");
+            routes = routes.stream()
+                    .filter(r -> r.getTo() != null && r.getTo().getName().toLowerCase().contains(toNamelike.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        return routes;
+    }
+
+    private List<Route> sortRoutes(List<Route> routes, String sort) {
+        String[] sortParts = sort.split(",");
+        for (String part : sortParts) {
+            boolean desc = part.startsWith("-");
+            String field = desc ? part.substring(1) : part;
+
+            switch (field) {
+                case "id":
+                    routes.sort(Comparator.comparing(Route::getId));
+                    break;
+                case "name":
+                    routes.sort(Comparator.comparing(Route::getName));
+                    break;
+                case "distance":
+                    routes.sort(Comparator.comparing(r -> r.getDistance() == null ? Long.MAX_VALUE : r.getDistance()));
+                    break;
+                case "creationDate":
+                    routes.sort(Comparator.comparing(Route::getCreationDate));
+                    break;
+            }
+
+            if (desc) {
+                Collections.reverse(routes);
+            }
+        }
+        return routes;
+    }
+}
+
+
+============= src/main/resources/application.properties =============
+# Consul ????????????
+spring.config.import=optional:consul:
+spring.cloud.consul.host=consul
+spring.cloud.consul.port=8500
+spring.cloud.consul.discovery.enabled=true
+spring.cloud.consul.discovery.instanceId=${spring.application.name}:${server.port}
+
+# Actuator ??? health checks
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=always
+
+# CORS ????????? ???
+spring.mvc.cors.allowed-origins=*
+spring.mvc.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
+spring.mvc.cors.allowed-headers=*
+
+
+============= src/main/resources/wildfly.keystore =============
+Skipped: Binary file
+
